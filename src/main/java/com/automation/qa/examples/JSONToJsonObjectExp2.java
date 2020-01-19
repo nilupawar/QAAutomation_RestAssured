@@ -1,10 +1,12 @@
-package com.automation.qa.util;
+package com.automation.qa.examples;
 
 import com.automation.qa.model.Message;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -20,6 +22,9 @@ import java.util.Objects;
 * It can handle object as simple object or array of objects
 */
 public class JSONToJsonObjectExp2 {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JSONToJsonObjectExp2.class);
+
     public static void main(String[] args) throws IOException, URISyntaxException {
         Path path = Paths.get(Objects.requireNonNull(JSONToJsonObjectExp2.class.getClassLoader().getResource("json.json")).toURI());
 
@@ -34,6 +39,6 @@ public class JSONToJsonObjectExp2 {
             JsonElement jsonElement1 = jsonElement.getAsJsonObject();
             messages.add(gson.fromJson(jsonElement1.toString(),Message.class));
         }
-        messages.forEach(System.out::println);
+        messages.forEach( message -> LOGGER.info(message.toString()));
     }
 }
