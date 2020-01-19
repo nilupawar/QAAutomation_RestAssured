@@ -5,12 +5,8 @@ import com.automation.qa.model.User;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +21,9 @@ public class JSONToJsonObjectExp1 {
     static final String ENCODER = "UTF-8";
 
     public static void main(String[] args) throws IOException, URISyntaxException {
-
-        Path path = Paths.get(Objects.requireNonNull(JSONToJsonObjectExp1.class.getClassLoader().getResource("json.json")).toURI());
-
-
-        JSONToJsonObjectExp1 JSONToJsonObjectExp1 = new JSONToJsonObjectExp1();
-        List<Message> messages = JSONToJsonObjectExp1.readJsonStream(new FileInputStream("D:\\Nilesh\\Workspace_inteliJ\\RestAssuredPractice\\src\\main\\resources\\json.json"));
+        File file = Paths.get(Objects.requireNonNull(JSONToJsonObjectExp1.class.getClassLoader().getResource("json.json")).toURI()).toFile();
+        JSONToJsonObjectExp1 jsonToJsonObjectExp = new JSONToJsonObjectExp1();
+        List<Message> messages = jsonToJsonObjectExp.readJsonStream(new FileInputStream(file));
         messages.forEach(System.out::println);
     }
 
