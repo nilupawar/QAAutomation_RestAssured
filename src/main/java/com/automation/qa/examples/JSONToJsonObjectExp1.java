@@ -4,9 +4,13 @@ import com.automation.qa.model.Message;
 import com.automation.qa.model.User;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.tools.StandardLocation;
 import java.io.*;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +22,18 @@ import java.util.Objects;
  *
  */
 public class JSONToJsonObjectExp1 {
-    static final String ENCODER = "UTF-8";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JSONToJsonObjectExp1.class);
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         File file = Paths.get(Objects.requireNonNull(JSONToJsonObjectExp1.class.getClassLoader().getResource("json.json")).toURI()).toFile();
         JSONToJsonObjectExp1 jsonToJsonObjectExp = new JSONToJsonObjectExp1();
         List<Message> messages = jsonToJsonObjectExp.readJsonStream(new FileInputStream(file));
-        messages.forEach(System.out::println);
+        messages.forEach( message -> LOGGER.info(message.toString()));
     }
 
     public List<Message> readJsonStream(InputStream in) throws IOException {
-        try (JsonReader reader = new JsonReader(new InputStreamReader(in, ENCODER))) {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
             return readMessagesArray(reader);
         }
     }
